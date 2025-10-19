@@ -3,26 +3,26 @@ import type { DayContent, LearningPlan } from '../types';
 export class LearningPlanGenerator {
   static generateDayStructure(aiLearningPlan: LearningPlan): DayContent[] {
     const days: DayContent[] = [];
-    
+
     for (let day = 1; day <= 90; day++) {
       const dayKey = `day${day}`;
       const videos = aiLearningPlan[dayKey] || [];
-      
+
       // Determine if it's a weekend (Saturday = day 6, Sunday = day 7)
       // Starting from Monday (day 1), calculate day of week
       const dayOfWeek = ((day - 1) % 7) + 1; // 1=Monday, 7=Sunday
       const isWeekend = dayOfWeek === 6 || dayOfWeek === 7; // Saturday or Sunday
-      
+
       const dayContent: DayContent = {
         day,
         videos,
         isWeekend,
         timeAllocation: isWeekend ? 3 : 1, // 3 hours on weekends, 1 hour on weekdays
       };
-      
+
       days.push(dayContent);
     }
-    
+
     return days;
   }
 
@@ -103,62 +103,95 @@ export const sampleAiLearningPlan: LearningPlan = {
     }
   ],
   day8: [
+
     {
-      title: "What is Machine Learning? Core Concepts",
-      link: "https://www.youtube.com/watch?v=ukzFI9rgwfU"
+      title: "Machine Learning Basics",
+      link: "https://www.youtube.com/watch?v=cfSDvPlFFVQ"
+    },
+    {
+      title: "Applications of Machine Learning",
+      link: "https://www.youtube.com/watch?v=HKcO3-6TYr0"
+    },
+    {
+      title: "ML vs DL vs AI",
+      link: "https://www.youtube.com/watch?v=9dFhZFUkzuQ"
     }
   ],
   day9: [
     {
-      title: "Features and Labels in Machine Learning",
-      link: "https://www.youtube.com/watch?v=X5gLP3kNySM"
+      title: "Machine Learning Tutorial Part 1",
+      link: "https://www.youtube.com/watch?v=DWsJc1xnOZo"
     }
   ],
   day10: [
     {
-      title: "Training vs Testing in Machine Learning",
-      link: "https://www.youtube.com/watch?v=fSytzGwwBVw"
+      title: "Machine Learning Tutorial Part 2",
+      link: "https://www.youtube.com/watch?v=_Wkx_447zBM"
     }
   ],
   day11: [
     {
-      title: "Overfitting and Underfitting Explained",
-      link: "https://www.youtube.com/watch?v=BqzgUnrNhFM"
+      title: "Mathematics for Machine Learning",
+      link: "https://www.youtube.com/watch?v=iyxqcS1u5go"
     }
   ],
   day12: [
     {
-      title: "Classification vs Regression in Machine Learning",
-      link: "https://www.youtube.com/watch?v=i_LwzRVP7bg"
+      title: "Supervised vs Unsupervised vs Reinforcement Learning",
+      link: "https://www.youtube.com/watch?v=1FZ0A1QCMWc"
+    },
+    {
+      title: "Machine Learning Algorithms Overview",
+      link: "https://www.youtube.com/watch?v=I7NrVwm3apg"
+    },
+    {
+      title: "PCA in Machine Learning",
+      link: "https://www.youtube.com/watch?v=2NEu9dbM4A8"
+    },
+    {
+      title: "Linear Regression Analysis",
+      link: "https://www.youtube.com/watch?v=NUXdtN1W1FE"
     }
   ],
   day13: [
     {
-      title: "Decision Trees Explained",
-      link: "https://www.youtube.com/watch?v=_L39rN6gz7Y"
-    },
-    {
-      title: "Random Forest Algorithm Clearly Explained",
-      link: "https://www.youtube.com/watch?v=v6VJ2RO66Ag"
-    },
-    {
-      title: "K-Nearest Neighbors (KNN) Explained",
-      link: "https://www.youtube.com/watch?v=0p0o5cmgLdE"
+      title: "K-Means Clustering Algorithm",
+      link: "https://www.youtube.com/watch?v=Xvwt7y2jf5E"
     }
   ],
   day14: [
     {
-      title: "Support Vector Machines (SVM) Explained",
-      link: "https://www.youtube.com/watch?v=efR1C6CvhmE"
+      title: "Decision Tree Algorithm",
+      link: "https://www.youtube.com/watch?v=RmajweUFKvM"
     },
     {
-      title: "K-Means Clustering Algorithm",
-      link: "https://www.youtube.com/watch?v=4b5d3muPQmA"
+      title: "Random Forest Algorithm",
+      link: "https://www.youtube.com/watch?v=eM4uJ6XGnSM"
     },
     {
-      title: "Accuracy, Precision, Recall & F1 Score",
-      link: "https://www.youtube.com/watch?v=jJ7ff7Gcq34"
-    }
+      title: "KNN Algorithm",
+      link: "https://www.youtube.com/watch?v=4HKqjENq9OU"
+    },
+    {
+      title: "Support Vector Machine (SVM)",
+      link: "https://www.youtube.com/watch?v=TtKF996oEl8"
+    },
+    {
+      title: "Naive Bayes Classifier",
+      link: "https://www.youtube.com/watch?v=l3dZ6ZNFjo0"
+    },
+    {
+      title: "Text Classification Using Naive Bayes",
+      link: "https://www.youtube.com/watch?v=60pqgfT5tZM"
+    },
+    {
+      title: "Netflix ML Use Case",
+      link: "https://www.youtube.com/watch?v=SBFFarEfmEs"
+    },
+    {
+      title: "How to Become a Machine Learning Engineer",
+      link: "https://www.youtube.com/watch?v=-5hEYRt8JE0"
+    },
   ],
   day15: [
     {
