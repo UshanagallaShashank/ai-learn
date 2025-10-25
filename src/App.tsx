@@ -1,82 +1,118 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import Dashboard from './components/Dashboard';
-import type { LearningPlan } from './types';
+import type { LearningPlan, AuthUser } from './types';
 import { sampleAiLearningPlan } from './utils/learningPlanGenerator';
+import { AuthService } from './services/authService';
 import './App.css';
-
-interface UserData {
-  name: string;
-  enrolledDate: string;
-}
 
 function App() {
   // Get API key from environment variable
   const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
   const [aiLearningPlan] = useState<LearningPlan>(sampleAiLearningPlan);
-  const [showRegistration, setShowRegistration] = useState(true);
-  const [userName, setUserName] = useState<string>('');
-  const [currentUser, setCurrentUser] = useState<UserData | null>(null);
+  const [showAuth, setShowAuth] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const [authError, setAuthError] = useState<string>('');
 
-  // Check if user is already registered
+  // Auth form state
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  // Check authentication state on mount
   useEffect(() => {
-    const storedUsers = localStorage.getItem('aiLearningUsers');
-    if (storedUsers) {
+    const checkAuth = async () => {
       try {
-        const users: UserData[] = JSON.parse(storedUsers);
-        if (users.length > 0) {
-          // Use the most recent user
-          const user = users[users.length - 1];
+        const user = await AuthService.getCurrentUser();
+        if (user) {
           setCurrentUser(user);
-          setShowRegistration(false);
+          setShowAuth(false);
         }
       } catch (error) {
-        console.error('Error loading user data:', error);
+        console.error('Error checking auth:', error);
+      } finally {
+        setIsLoading(false);
       }
-    }
+    };
+
+    checkAuth();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = AuthService.onAuthStateChange((user) => {
+      setCurrentUser(user);
+      setShowAuth(!user);
+      setIsLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const handleUserRegistration = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (userName.trim()) {
-      const newUser: UserData = {
-        name: userName.trim(),
-        enrolledDate: new Date().toISOString(),
-      };
+    setAuthError('');
 
-      // Get existing users or create new array
-      let users: UserData[] = [];
-      const storedUsers = localStorage.getItem('aiLearningUsers');
-      if (storedUsers) {
-        try {
-          users = JSON.parse(storedUsers);
-        } catch (error) {
-          console.error('Error parsing user data:', error);
-        }
-      }
+    if (password !== confirmPassword) {
+      setAuthError('Passwords do not match');
+      return;
+    }
 
-      // Add new user
-      users.push(newUser);
-      localStorage.setItem('aiLearningUsers', JSON.stringify(users));
-      
-      setCurrentUser(newUser);
-      setShowRegistration(false);
+    if (password.length < 6) {
+      setAuthError('Password must be at least 6 characters');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await AuthService.signUp(email, password, name);
+      setAuthError('');
+      // User will be automatically signed in after email confirmation
+    } catch (error: any) {
+      setAuthError(error.message || 'Failed to create account');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Function to update learning plan from JSON
-  // const handlePlanUpdate = (planText: string) => {
-  //   try {
-  //     const parsedPlan = JSON.parse(planText);
-  //     setAiLearningPlan(parsedPlan);
-  //   } catch (error) {
-  //     console.error('Invalid JSON format for learning plan');
-  //   }
-  // };
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
 
-  if (showRegistration) {
+    try {
+      setIsLoading(true);
+      await AuthService.signIn(email, password);
+      setAuthError('');
+    } catch (error: any) {
+      setAuthError(error.message || 'Failed to sign in');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await AuthService.signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" />
+          <p className="mt-3">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (showAuth) {
     return (
       <div className="registration-wrapper">
         <Container>
@@ -93,38 +129,123 @@ function App() {
                 <Card.Body className="p-5">
                   <Alert variant="info" className="mb-4">
                     <i className="bi bi-info-circle-fill me-2"></i>
-                    <strong>Welcome!</strong> Start your AI learning journey today. 
+                    <strong>Welcome!</strong> Start your AI learning journey today.
                     Complete this 90-day program with curated video content, quizzes, and AI-generated summaries.
                   </Alert>
-                  
-                  <Form onSubmit={handleUserRegistration}>
-                    <Form.Group className="mb-4">
+
+                  {authError && (
+                    <Alert variant="danger" className="mb-4">
+                      <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                      {authError}
+                    </Alert>
+                  )}
+
+                  <div className="mb-4">
+                    <div className="btn-group w-100" role="group">
+                      <Button
+                        variant={authMode === 'signin' ? 'primary' : 'outline-primary'}
+                        onClick={() => setAuthMode('signin')}
+                      >
+                        Sign In
+                      </Button>
+                      <Button
+                        variant={authMode === 'signup' ? 'primary' : 'outline-primary'}
+                        onClick={() => setAuthMode('signup')}
+                      >
+                        Sign Up
+                      </Button>
+                    </div>
+                  </div>
+
+                  <Form onSubmit={authMode === 'signin' ? handleSignIn : handleSignUp}>
+                    {authMode === 'signup' && (
+                      <Form.Group className="mb-3">
+                        <Form.Label className="fw-bold">
+                          <i className="bi bi-person-fill me-2"></i>Full Name
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your full name"
+                          value={name}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                          required
+                          className="form-control-lg"
+                        />
+                      </Form.Group>
+                    )}
+
+                    <Form.Group className="mb-3">
                       <Form.Label className="fw-bold">
-                        <i className="bi bi-person-fill me-2"></i>Your Name
+                        <i className="bi bi-envelope-fill me-2"></i>Email Address
                       </Form.Label>
                       <Form.Control
-                        type="text"
-                        placeholder="Enter your full name"
-                        value={userName}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)}
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                        required
+                        className="form-control-lg"
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label className="fw-bold">
+                        <i className="bi bi-lock-fill me-2"></i>Password
+                      </Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                         required
                         className="form-control-lg"
                       />
                       <Form.Text className="text-muted">
-                        We'll personalize your learning experience
+                        Password must be at least 6 characters
                       </Form.Text>
                     </Form.Group>
-                    
+
+                    {authMode === 'signup' && (
+                      <Form.Group className="mb-4">
+                        <Form.Label className="fw-bold">
+                          <i className="bi bi-lock-fill me-2"></i>Confirm Password
+                        </Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="Confirm your password"
+                          value={confirmPassword}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+                          required
+                          className="form-control-lg"
+                        />
+                      </Form.Group>
+                    )}
+
                     <div className="d-grid">
-                      <Button variant="primary" type="submit" size="lg" className="py-3">
-                        <i className="bi bi-rocket-takeoff-fill me-2"></i>
-                        Start Learning Journey
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        size="lg"
+                        className="py-3"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <>
+                            <Spinner animation="border" size="sm" className="me-2" />
+                            {authMode === 'signin' ? 'Signing In...' : 'Creating Account...'}
+                          </>
+                        ) : (
+                          <>
+                            <i className={`bi bi-${authMode === 'signin' ? 'box-arrow-in-right' : 'person-plus'}-fill me-2`}></i>
+                            {authMode === 'signin' ? 'Sign In' : 'Create Account'}
+                          </>
+                        )}
                       </Button>
                     </div>
                   </Form>
 
                   <hr className="my-4" />
-                  
+
                   <div>
                     <h5 className="mb-3">
                       <i className="bi bi-calendar-check me-2"></i>
@@ -164,12 +285,7 @@ function App() {
               <Button
                 variant="outline-light"
                 size="sm"
-                onClick={() => {
-                  if (confirm('Are you sure you want to log out?')) {
-                    setShowRegistration(true);
-                    setCurrentUser(null);
-                  }
-                }}
+                onClick={handleSignOut}
               >
                 <i className="bi bi-box-arrow-right me-1"></i> Logout
               </Button>
@@ -178,9 +294,10 @@ function App() {
         </div>
       )}
 
-      <Dashboard 
+      <Dashboard
         aiLearningPlan={aiLearningPlan}
         geminiApiKey={geminiApiKey}
+        currentUser={currentUser}
       />
     </div>
   );

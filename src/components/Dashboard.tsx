@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, ProgressBar, Badge, Button } from 'react-bootstrap';
-import type { DayContent, LearningPlan } from '../types';
+import { Container, Row, Col, Card, ProgressBar, Badge, Button, Spinner, Alert } from 'react-bootstrap';
+import type { DayContent, LearningPlan, AuthUser, UserStats } from '../types';
 import { LearningPlanGenerator } from '../utils/learningPlanGenerator';
+import { ProgressService } from '../services/progressService';
 import DayViewer from './DayViewer';
 import WeeklyOverview from './WeeklyOverview';
 
 interface DashboardProps {
   aiLearningPlan: LearningPlan;
   geminiApiKey: string;
+  currentUser: AuthUser;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) => {
+const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, currentUser }) => {
   const [days, setDays] = useState<DayContent[]>([]);
   const [currentDay, setCurrentDay] = useState(1);
   const [completedDays, setCompletedDays] = useState<Set<number>>(new Set());
+  const [userStats, setUserStats] = useState<UserStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string>('');
   const [view, setView] = useState<'dashboard' | 'day' | 'week'>('dashboard');
 
   useEffect(() => {
@@ -21,27 +26,105 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
     setDays(generatedDays);
   }, [aiLearningPlan]);
 
+  // Load user progress and stats
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const [completedDaysSet, stats] = await Promise.all([
+          ProgressService.getCompletedDays(currentUser.id),
+          ProgressService.getUserStats(currentUser.id)
+        ]);
+
+        setCompletedDays(completedDaysSet);
+        setUserStats(stats);
+      } catch (err: any) {
+        setError(err.message || 'Failed to load user data');
+        console.error('Error loading user data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (currentUser?.id) {
+      loadUserData();
+    }
+  }, [currentUser?.id]);
+
   const currentDayData = days.find(d => d.day === currentDay);
   const progressPercentage = (completedDays.size / 90) * 100;
   const currentWeek = LearningPlanGenerator.getWeekNumber(currentDay);
 
-  const markDayComplete = (day: number) => {
-    setCompletedDays(prev => new Set([...prev, day]));
+  const markDayComplete = async (day: number, timeSpent?: number, quizScore?: number, notes?: string) => {
+    try {
+      await ProgressService.markDayComplete(currentUser.id, day, timeSpent, quizScore, notes);
+      setCompletedDays(prev => new Set([...prev, day]));
+
+      // Refresh stats
+      const stats = await ProgressService.getUserStats(currentUser.id);
+      setUserStats(stats);
+    } catch (err: any) {
+      setError(err.message || 'Failed to save progress');
+      console.error('Error marking day complete:', err);
+    }
+  };
+
+  const markDayIncomplete = async (day: number) => {
+    try {
+      await ProgressService.markDayIncomplete(currentUser.id, day);
+      setCompletedDays(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(day);
+        return newSet;
+      });
+
+      // Refresh stats
+      const stats = await ProgressService.getUserStats(currentUser.id);
+      setUserStats(stats);
+    } catch (err: any) {
+      setError(err.message || 'Failed to update progress');
+      console.error('Error marking day incomplete:', err);
+    }
   };
 
   const getTotalHoursCompleted = () => {
-    return Array.from(completedDays).reduce((total, day) => {
-      const dayData = days.find(d => d.day === day);
-      return total + (dayData?.timeAllocation || 0);
-    }, 0);
+    return userStats?.total_hours_learned || 0;
   };
+
+  if (isLoading) {
+    return (
+      <Container fluid className="py-4">
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
+          <div className="text-center">
+            <Spinner animation="border" variant="primary" />
+            <p className="mt-3">Loading your progress...</p>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container fluid className="py-4">
+        <Alert variant="danger">
+          <i className="bi bi-exclamation-triangle-fill me-2"></i>
+          {error}
+        </Alert>
+      </Container>
+    );
+  }
 
   if (view === 'day' && currentDayData) {
     return (
       <DayViewer
         dayData={currentDayData}
         geminiApiKey={geminiApiKey}
-        onComplete={() => markDayComplete(currentDay)}
+        onComplete={(timeSpent?: number, quizScore?: number, notes?: string) =>
+          markDayComplete(currentDay, timeSpent, quizScore, notes)
+        }
         onBack={() => setView('dashboard')}
         isCompleted={completedDays.has(currentDay)}
       />
@@ -96,7 +179,7 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
         <Col md={3}>
           <Card className="text-center">
             <Card.Body>
-              <h2 className="text-success">{completedDays.size}</h2>
+              <h2 className="text-success">{userStats?.total_days_completed || 0}</h2>
               <p className="mb-0">Days Completed</p>
               <small className="text-muted">out of 90 days</small>
             </Card.Body>
@@ -114,9 +197,9 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
         <Col md={3}>
           <Card className="text-center">
             <Card.Body>
-              <h2 className="text-warning">{currentWeek}</h2>
-              <p className="mb-0">Current Week</p>
-              <small className="text-muted">of 13 weeks</small>
+              <h2 className="text-warning">{userStats?.current_streak || 0}</h2>
+              <p className="mb-0">Current Streak</p>
+              <small className="text-muted">days in a row</small>
             </Card.Body>
           </Card>
         </Col>
@@ -130,9 +213,9 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
                 <h5 className="mb-0">Overall Progress</h5>
                 <Badge bg="primary">{progressPercentage.toFixed(1)}%</Badge>
               </div>
-              <ProgressBar 
-                now={progressPercentage} 
-                variant="success" 
+              <ProgressBar
+                now={progressPercentage}
+                variant="success"
                 style={{ height: '10px' }}
               />
             </Card.Body>
@@ -157,7 +240,7 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
                       {currentDayData.timeAllocation} hour{currentDayData.timeAllocation > 1 ? 's' : ''}
                     </Badge>
                   </div>
-                  
+
                   <h6>Videos for Today:</h6>
                   {currentDayData.videos.length > 0 ? (
                     <ul className="list-unstyled">
@@ -171,9 +254,9 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
                   ) : (
                     <p className="text-muted">No videos scheduled for today</p>
                   )}
-                  
-                  <Button 
-                    variant="primary" 
+
+                  <Button
+                    variant="primary"
                     onClick={() => setView('day')}
                     disabled={currentDayData.videos.length === 0}
                     className="w-100"
@@ -195,13 +278,13 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
             </Card.Header>
             <Card.Body>
               <div className="d-grid gap-2">
-                <Button 
-                  variant="outline-primary" 
+                <Button
+                  variant="outline-primary"
                   onClick={() => setView('week')}
                 >
                   View This Week
                 </Button>
-                <Button 
+                <Button
                   variant="outline-secondary"
                   onClick={() => {
                     const nextDay = Math.min(currentDay + 1, 90);
@@ -211,7 +294,7 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
                 >
                   Skip to Next Day
                 </Button>
-                <Button 
+                <Button
                   variant="outline-info"
                   onClick={() => {
                     const prevDay = Math.max(currentDay - 1, 1);
@@ -239,15 +322,14 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey }) =
                   const day = Math.max(1, currentDay - 6 + i);
                   const isCompleted = completedDays.has(day);
                   const isCurrent = day === currentDay;
-                  
+
                   return (
                     <Col key={day} className="text-center mb-2">
-                      <div 
-                        className={`p-2 rounded ${
-                          isCurrent ? 'bg-primary text-white' : 
-                          isCompleted ? 'bg-success text-white' : 
-                          'bg-light'
-                        }`}
+                      <div
+                        className={`p-2 rounded ${isCurrent ? 'bg-primary text-white' :
+                          isCompleted ? 'bg-success text-white' :
+                            'bg-light'
+                          }`}
                         style={{ cursor: 'pointer' }}
                         onClick={() => setCurrentDay(day as number)}
                       >

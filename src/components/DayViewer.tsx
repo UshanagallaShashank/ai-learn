@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Spinner, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Spinner, Alert, Form, Modal } from 'react-bootstrap';
 import type { DayContent, GeneratedContent } from '../types';
 import { LearningPlanGenerator } from '../utils/learningPlanGenerator';
 import GeminiService from '../services/geminiService';
@@ -9,23 +9,27 @@ import QuizComponent from './QuizComponent';
 interface DayViewerProps {
   dayData: DayContent;
   geminiApiKey: string;
-  onComplete: () => void;
+  onComplete: (timeSpent?: number, quizScore?: number, notes?: string) => void;
   onBack: () => void;
   isCompleted: boolean;
 }
 
-const DayViewer: React.FC<DayViewerProps> = ({ 
-  dayData, 
-  geminiApiKey, 
-  onComplete, 
-  onBack, 
-  isCompleted 
+const DayViewer: React.FC<DayViewerProps> = ({
+  dayData,
+  geminiApiKey,
+  onComplete,
+  onBack,
+  isCompleted
 }) => {
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentSection, setCurrentSection] = useState<'videos' | 'summary' | 'quiz'>('videos');
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [timeSpent, setTimeSpent] = useState<number>(0);
+  const [quizScore, setQuizScore] = useState<number>(0);
+  const [notes, setNotes] = useState<string>('');
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
 
   useEffect(() => {
     if (dayData.videos.length > 0 && !generatedContent) {
@@ -59,9 +63,15 @@ const DayViewer: React.FC<DayViewerProps> = ({
 
   const handleQuizComplete = (score: number) => {
     setQuizCompleted(true);
+    setQuizScore(score);
     if (score >= 3) { // Pass with 60% or higher
-      onComplete();
+      setShowCompletionModal(true);
     }
+  };
+
+  const handleCompleteDay = () => {
+    onComplete(timeSpent, quizScore, notes);
+    setShowCompletionModal(false);
   };
 
   const dayOfWeek = LearningPlanGenerator.getDayOfWeekName(dayData.day);
@@ -110,22 +120,22 @@ const DayViewer: React.FC<DayViewerProps> = ({
                 <Button variant="outline-secondary" onClick={onBack}>
                   ← Back to Dashboard
                 </Button>
-                
+
                 <div className="btn-group" role="group">
-                  <Button 
+                  <Button
                     variant={currentSection === 'videos' ? 'primary' : 'outline-primary'}
                     onClick={() => setCurrentSection('videos')}
                   >
                     Videos
                   </Button>
-                  <Button 
+                  <Button
                     variant={currentSection === 'summary' ? 'primary' : 'outline-primary'}
                     onClick={() => setCurrentSection('summary')}
                     disabled={!generatedContent}
                   >
                     Summary & Key Points
                   </Button>
-                  <Button 
+                  <Button
                     variant={currentSection === 'quiz' ? 'primary' : 'outline-primary'}
                     onClick={() => setCurrentSection('quiz')}
                     disabled={!generatedContent}
@@ -161,11 +171,11 @@ const DayViewer: React.FC<DayViewerProps> = ({
                     No videos scheduled for this day.
                   </Alert>
                 )}
-                
+
                 {dayData.videos.length > 0 && (
                   <div className="text-center mt-4">
-                    <Button 
-                      variant="success" 
+                    <Button
+                      variant="success"
                       size="lg"
                       onClick={() => setCurrentSection('summary')}
                       disabled={loading}
@@ -197,7 +207,7 @@ const DayViewer: React.FC<DayViewerProps> = ({
               <Card.Body>
                 <p className="lead">{generatedContent.summary}</p>
                 <div className="text-center mt-4">
-                  <Button 
+                  <Button
                     variant="primary"
                     onClick={() => setCurrentSection('quiz')}
                   >
@@ -230,7 +240,7 @@ const DayViewer: React.FC<DayViewerProps> = ({
       {currentSection === 'quiz' && generatedContent && (
         <Row>
           <Col>
-            <QuizComponent 
+            <QuizComponent
               questions={generatedContent.quiz}
               onComplete={handleQuizComplete}
               isCompleted={quizCompleted}
@@ -248,6 +258,68 @@ const DayViewer: React.FC<DayViewerProps> = ({
           </Col>
         </Row>
       )}
+
+      {/* Completion Modal */}
+      <Modal show={showCompletionModal} onHide={() => setShowCompletionModal(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <i className="bi bi-check-circle-fill text-success me-2"></i>
+            Complete Day {dayData.day}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Alert variant="success">
+            <i className="bi bi-trophy-fill me-2"></i>
+            Congratulations! You've completed the quiz with a score of {quizScore}/5.
+          </Alert>
+
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>
+                <i className="bi bi-clock-fill me-2"></i>
+                Time Spent (minutes)
+              </Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter time spent in minutes"
+                value={timeSpent}
+                onChange={(e) => setTimeSpent(parseInt(e.target.value) || 0)}
+                min="1"
+                max="480"
+              />
+              <Form.Text className="text-muted">
+                How long did you spend on today's learning?
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>
+                <i className="bi bi-journal-text me-2"></i>
+                Notes (Optional)
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Add any notes about what you learned today..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+              <Form.Text className="text-muted">
+                Share your thoughts, key takeaways, or questions.
+              </Form.Text>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCompletionModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="success" onClick={handleCompleteDay}>
+            <i className="bi bi-check-circle-fill me-2"></i>
+            Complete Day
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
