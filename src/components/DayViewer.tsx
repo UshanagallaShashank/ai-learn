@@ -155,13 +155,24 @@ const DayViewer: React.FC<DayViewerProps> = ({
           <Col>
             <Card>
               <Card.Header>
-                <h4 className="mb-0">Today's Videos ({dayData.videos.length})</h4>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h4 className="mb-0">Today's Videos ({dayData.videos.length})</h4>
+                  <Button
+                    variant="success"
+                    size="sm"
+                    onClick={() => setCurrentSection('summary')}
+                    disabled={loading}
+                  >
+                    <i className="bi bi-arrow-right me-1"></i>
+                    Continue to Summary
+                  </Button>
+                </div>
               </Card.Header>
               <Card.Body>
                 {dayData.videos.length > 0 ? (
                   <Row>
                     {dayData.videos.map((video, index) => (
-                      <Col md={6} key={index} className="mb-4">
+                      <Col xl={3} lg={4} md={6} sm={12} key={index} className="mb-3">
                         <VideoPlayer video={video} geminiApiKey={geminiApiKey} />
                       </Col>
                     ))}
@@ -172,25 +183,6 @@ const DayViewer: React.FC<DayViewerProps> = ({
                   </Alert>
                 )}
 
-                {dayData.videos.length > 0 && (
-                  <div className="text-center mt-4">
-                    <Button
-                      variant="success"
-                      size="lg"
-                      onClick={() => setCurrentSection('summary')}
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <Spinner size="sm" className="me-2" />
-                          Generating Content...
-                        </>
-                      ) : (
-                        'Continue to Summary →'
-                      )}
-                    </Button>
-                  </div>
-                )}
               </Card.Body>
             </Card>
           </Col>

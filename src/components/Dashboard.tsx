@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, ProgressBar, Badge, Button, Spinner, Alert } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Row, Col, Card, Badge, Button, Spinner, Alert } from 'react-bootstrap';
 import type { DayContent, LearningPlan, AuthUser, UserStats } from '../types';
 import { LearningPlanGenerator } from '../utils/learningPlanGenerator';
 import { ProgressService } from '../services/progressService';
@@ -20,6 +20,7 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [view, setView] = useState<'dashboard' | 'day' | 'week'>('dashboard');
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const generatedDays = LearningPlanGenerator.generateDayStructure(aiLearningPlan);
@@ -59,6 +60,13 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
   const currentDayData = days.find(d => d.day === currentDay);
   const progressPercentage = (completedDays.size / 90) * 100;
   const currentWeek = LearningPlanGenerator.getWeekNumber(currentDay);
+
+  // Update progress bar width
+  useEffect(() => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = `${progressPercentage}%`;
+    }
+  }, [progressPercentage]);
 
   const markDayComplete = async (day: number, timeSpent?: number, quizScore?: number, notes?: string) => {
     try {
@@ -105,11 +113,9 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
   if (isLoading) {
     return (
       <Container fluid className="py-4">
-        <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
-          <div className="text-center">
-            <Spinner animation="border" variant="primary" />
-            <p className="mt-3">Loading your progress...</p>
-          </div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="text-muted">Loading your progress...</p>
         </div>
       </Container>
     );
@@ -161,217 +167,184 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
   }
 
   return (
-    <Container fluid className="py-4">
-      <Row className="mb-4">
+    <div className="content-wrapper">
+      {/* Compact Stats Bar */}
+      <div className="compact-stats-bar">
+        <div className="stat-item-compact">
+          <div className="stat-number-compact">{currentDay}</div>
+          <div className="stat-label-compact">Current Day</div>
+          <div className="stat-subtitle-compact">
+            {LearningPlanGenerator.getDayOfWeekName(currentDay)}
+          </div>
+        </div>
+        <div className="stat-item-compact">
+          <div className="stat-number-compact">{userStats?.total_days_completed || 0}</div>
+          <div className="stat-label-compact">Days Completed</div>
+          <div className="stat-subtitle-compact">out of 90 days</div>
+        </div>
+        <div className="stat-item-compact">
+          <div className="stat-number-compact">{getTotalHoursCompleted()}</div>
+          <div className="stat-label-compact">Hours Learned</div>
+          <div className="stat-subtitle-compact">total study time</div>
+        </div>
+        <div className="stat-item-compact">
+          <div className="stat-number-compact">{userStats?.current_streak || 0}</div>
+          <div className="stat-label-compact">Current Streak</div>
+          <div className="stat-subtitle-compact">days in a row</div>
+        </div>
+      </div>
+
+      {/* Day Tabs */}
+      <Row className="mb-3">
         <Col>
-          <Card className="bg-primary text-white">
-            <Card.Body>
-              <h1 className="display-4 mb-0">AI Learning Journey</h1>
-              <p className="lead mb-0">90-Day Comprehensive AI & Machine Learning Course</p>
-            </Card.Body>
-          </Card>
+          <div className="day-tabs-container">
+            <div className="day-tabs">
+              {Array.from({ length: 7 }, (_, i) => {
+                const day = Math.max(1, currentDay - 3 + i);
+                const isCompleted = completedDays.has(day);
+                const isCurrent = day === currentDay;
+                const dayName = LearningPlanGenerator.getDayOfWeekName(day);
+
+                return (
+                  <button
+                    key={day}
+                    className={`day-tab ${isCurrent ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                    onClick={() => setCurrentDay(day)}
+                  >
+                    <div className="day-tab-number">Day {day}</div>
+                    <div className="day-tab-name">{dayName.slice(0, 3)}</div>
+                    {isCompleted && <div className="day-tab-check">✓</div>}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="day-tabs-actions">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={() => setView('week')}
+                className="action-btn-small"
+              >
+                <i className="bi bi-calendar-week me-1"></i>
+                This Week
+              </Button>
+            </div>
+          </div>
         </Col>
       </Row>
 
+      {/* Compact Learning Content */}
       <Row className="mb-4">
-        <Col md={3}>
-          <Card className="text-center">
-            <Card.Body>
-              <h2 className="text-primary">{currentDay}</h2>
-              <p className="mb-0">Current Day</p>
-              <small className="text-muted">
-                {LearningPlanGenerator.getDayOfWeekName(currentDay)}
-              </small>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}>
-          <Card className="text-center">
-            <Card.Body>
-              <h2 className="text-success">{userStats?.total_days_completed || 0}</h2>
-              <p className="mb-0">Days Completed</p>
-              <small className="text-muted">out of 90 days</small>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}>
-          <Card className="text-center">
-            <Card.Body>
-              <h2 className="text-info">{getTotalHoursCompleted()}</h2>
-              <p className="mb-0">Hours Learned</p>
-              <small className="text-muted">total study time</small>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}>
-          <Card className="text-center">
-            <Card.Body>
-              <h2 className="text-warning">{userStats?.current_streak || 0}</h2>
-              <p className="mb-0">Current Streak</p>
-              <small className="text-muted">days in a row</small>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="mb-4">
-        <Col>
-          <Card>
-            <Card.Body>
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <h5 className="mb-0">Overall Progress</h5>
-                <Badge bg="primary">{progressPercentage.toFixed(1)}%</Badge>
+        <Col lg={8} md={12} className="mb-3">
+          <Card className="learning-card-compact">
+            <Card.Header className="learning-card-header-compact">
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 className="mb-1">Today's Videos ({currentDayData?.videos.length || 0})</h6>
+                  <small className="text-muted">
+                    {currentDayData?.isWeekend ? 'Weekend' : 'Weekday'} • {currentDayData?.timeAllocation || 0}h
+                  </small>
+                </div>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => setView('day')}
+                  disabled={!currentDayData || currentDayData.videos.length === 0}
+                  className="start-learning-btn-small"
+                >
+                  <i className="bi bi-play-fill me-1"></i>
+                  Start Learning
+                </Button>
               </div>
-              <ProgressBar
-                now={progressPercentage}
-                variant="success"
-                style={{ height: '10px' }}
-              />
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="mb-4">
-        <Col md={6}>
-          <Card className="h-100">
-            <Card.Header>
-              <h5 className="mb-0">Today's Learning</h5>
             </Card.Header>
-            <Card.Body>
+            <Card.Body className="learning-card-body-compact">
               {currentDayData ? (
                 <>
-                  <div className="mb-3">
-                    <Badge bg={currentDayData.isWeekend ? 'info' : 'secondary'}>
-                      {currentDayData.isWeekend ? 'Weekend' : 'Weekday'}
-                    </Badge>
-                    <Badge bg="outline-primary" className="ms-2">
-                      {currentDayData.timeAllocation} hour{currentDayData.timeAllocation > 1 ? 's' : ''}
-                    </Badge>
-                  </div>
-
-                  <h6>Videos for Today:</h6>
                   {currentDayData.videos.length > 0 ? (
-                    <ul className="list-unstyled">
-                      {currentDayData.videos.map((video, index) => (
-                        <li key={index} className="mb-2">
-                          <i className="bi bi-play-circle me-2"></i>
-                          {video.title}
-                        </li>
+                    <div className="videos-list-compact">
+                      {currentDayData.videos.slice(0, 3).map((video, index) => (
+                        <div key={index} className="video-item-compact">
+                          <i className="bi bi-play-circle video-icon-compact"></i>
+                          <span className="video-title-compact">{video.title}</span>
+                        </div>
                       ))}
-                    </ul>
+                      {currentDayData.videos.length > 3 && (
+                        <div className="more-videos-compact">
+                          +{currentDayData.videos.length - 3} more videos
+                        </div>
+                      )}
+                    </div>
                   ) : (
-                    <p className="text-muted">No videos scheduled for today</p>
+                    <div className="no-videos-compact">
+                      <i className="bi bi-video-slash"></i>
+                      <span>No videos scheduled</span>
+                    </div>
                   )}
-
-                  <Button
-                    variant="primary"
-                    onClick={() => setView('day')}
-                    disabled={currentDayData.videos.length === 0}
-                    className="w-100"
-                  >
-                    Start Today's Learning
-                  </Button>
                 </>
               ) : (
-                <p className="text-muted">Loading today's content...</p>
+                <div className="loading-content-compact">
+                  <Spinner animation="border" size="sm" className="me-2" />
+                  Loading...
+                </div>
               )}
             </Card.Body>
           </Card>
         </Col>
 
-        <Col md={6}>
-          <Card className="h-100">
-            <Card.Header>
-              <h5 className="mb-0">Quick Actions</h5>
+        <Col lg={4} md={12}>
+          <Card className="quick-actions-compact">
+            <Card.Header className="quick-actions-header">
+              <h6 className="mb-0">Quick Actions</h6>
             </Card.Header>
-            <Card.Body>
-              <div className="d-grid gap-2">
-                <Button
-                  variant="outline-primary"
+            <Card.Body className="quick-actions-body">
+              <div className="quick-actions-grid">
+                <button
+                  className="quick-action-btn"
                   onClick={() => setView('week')}
                 >
-                  View This Week
-                </Button>
-                <Button
-                  variant="outline-success"
+                  <i className="bi bi-calendar-week"></i>
+                  <span>This Week</span>
+                </button>
+                <button
+                  className="quick-action-btn"
                   onClick={refreshUserData}
                   disabled={isLoading}
                 >
                   {isLoading ? (
-                    <>
-                      <Spinner animation="border" size="sm" className="me-2" />
-                      Refreshing...
-                    </>
+                    <Spinner animation="border" size="sm" />
                   ) : (
-                    <>
-                      <i className="bi bi-arrow-clockwise me-2"></i>
-                      Refresh Data
-                    </>
+                    <i className="bi bi-arrow-clockwise"></i>
                   )}
-                </Button>
-                <Button
-                  variant="outline-secondary"
+                  <span>Refresh</span>
+                </button>
+                <button
+                  className="quick-action-btn"
                   onClick={() => {
                     const nextDay = Math.min(currentDay + 1, 90);
                     setCurrentDay(nextDay);
                   }}
                   disabled={currentDay >= 90}
                 >
-                  Skip to Next Day
-                </Button>
-                <Button
-                  variant="outline-info"
+                  <i className="bi bi-skip-forward"></i>
+                  <span>Next Day</span>
+                </button>
+                <button
+                  className="quick-action-btn"
                   onClick={() => {
                     const prevDay = Math.max(currentDay - 1, 1);
                     setCurrentDay(prevDay);
                   }}
                   disabled={currentDay <= 1}
                 >
-                  Go to Previous Day
-                </Button>
+                  <i className="bi bi-skip-backward"></i>
+                  <span>Prev Day</span>
+                </button>
               </div>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-
-      <Row>
-        <Col>
-          <Card>
-            <Card.Header>
-              <h5 className="mb-0">Recent Progress</h5>
-            </Card.Header>
-            <Card.Body>
-              <Row>
-                {Array.from({ length: 7 }, (_, i) => {
-                  const day = Math.max(1, currentDay - 6 + i);
-                  const isCompleted = completedDays.has(day);
-                  const isCurrent = day === currentDay;
-
-                  return (
-                    <Col key={day} className="text-center mb-2">
-                      <div
-                        className={`p-2 rounded ${isCurrent ? 'bg-primary text-white' :
-                          isCompleted ? 'bg-success text-white' :
-                            'bg-light'
-                          }`}
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setCurrentDay(day as number)}
-                      >
-                        <small>Day {day}</small>
-                        <br />
-                        <small>{LearningPlanGenerator.getDayOfWeekName(day).slice(0, 3)}</small>
-                      </div>
-                    </Col>
-                  );
-                })}
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    </div>
   );
 };
 

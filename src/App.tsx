@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import Dashboard from './components/Dashboard';
+import Sidebar from './components/Sidebar';
 import type { LearningPlan, AuthUser } from './types';
 import { sampleAiLearningPlan } from './utils/learningPlanGenerator';
 import { AuthService } from './services/authService';
@@ -17,6 +18,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [authError, setAuthError] = useState<string>('');
+  const [activeView, setActiveView] = useState<string>('dashboard');
 
   // Auth form state
   const [email, setEmail] = useState<string>('');
@@ -269,37 +271,69 @@ function App() {
     );
   }
 
+  const renderContent = () => {
+    switch (activeView) {
+      case 'dashboard':
+        return (
+          <Dashboard
+            aiLearningPlan={aiLearningPlan}
+            geminiApiKey={geminiApiKey}
+            currentUser={currentUser!}
+          />
+        );
+      case 'learning':
+        return (
+          <div className="content-wrapper">
+            <h2>Learning Materials</h2>
+            <p>Your study materials and resources will appear here.</p>
+          </div>
+        );
+      case 'progress':
+        return (
+          <div className="content-wrapper">
+            <h2>Progress Tracking</h2>
+            <p>Detailed progress analytics will appear here.</p>
+          </div>
+        );
+      case 'achievements':
+        return (
+          <div className="content-wrapper">
+            <h2>Achievements</h2>
+            <p>Your badges and achievements will appear here.</p>
+          </div>
+        );
+      case 'settings':
+        return (
+          <div className="content-wrapper">
+            <h2>Settings</h2>
+            <p>Account settings and preferences will appear here.</p>
+          </div>
+        );
+      default:
+        return (
+          <Dashboard
+            aiLearningPlan={aiLearningPlan}
+            geminiApiKey={geminiApiKey}
+            currentUser={currentUser!}
+          />
+        );
+    }
+  };
+
   return (
     <div className="App">
-      {/* Welcome Header */}
       {currentUser && (
-        <div className="welcome-banner">
-          <Container>
-            <div className="d-flex justify-content-between align-items-center py-3">
-              <div>
-                <h5 className="mb-0 text-white">
-                  <i className="bi bi-person-circle me-2"></i>
-                  Welcome back, <strong>{currentUser.name}</strong>!
-                </h5>
-              </div>
-              <Button
-                variant="outline-light"
-                size="sm"
-                onClick={handleSignOut}
-              >
-                <i className="bi bi-box-arrow-right me-1"></i> Logout
-              </Button>
-            </div>
-          </Container>
-        </div>
-      )}
-
-      {currentUser && (
-        <Dashboard
-          aiLearningPlan={aiLearningPlan}
-          geminiApiKey={geminiApiKey}
-          currentUser={currentUser}
-        />
+        <>
+          <Sidebar
+            currentUser={currentUser}
+            activeView={activeView}
+            onViewChange={setActiveView}
+            onSignOut={handleSignOut}
+          />
+          <div className="main-content">
+            {renderContent()}
+          </div>
+        </>
       )}
     </div>
   );
