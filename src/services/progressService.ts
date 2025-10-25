@@ -189,4 +189,14 @@ export class ProgressService {
             // Don't throw error to prevent blocking the app
         }
     }
+
+    static async getAllUserProgress(): Promise<UserProgress[]> {
+        const { data, error } = await supabase
+            .from('user_progress')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return data || [];
+    }
 }

@@ -4,15 +4,17 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
+import AdminPanel from './components/AdminPanel';
 import type { LearningPlan, AuthUser } from './types';
 import { sampleAiLearningPlan } from './utils/learningPlanGenerator';
 import { AuthService } from './services/authService';
+import { LearningPlanService } from './services/learningPlanService';
 import './App.css';
 
 function App() {
   // Get API key from environment variable
   const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-  const [aiLearningPlan] = useState<LearningPlan>(sampleAiLearningPlan);
+  const [aiLearningPlan, setAiLearningPlan] = useState<LearningPlan>(sampleAiLearningPlan);
   const [showAuth, setShowAuth] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
@@ -26,7 +28,7 @@ function App() {
   const [name, setName] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  // Check authentication state on mount
+  // Check authentication state on mount and load learning plan
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -34,6 +36,19 @@ function App() {
         if (user) {
           setCurrentUser(user);
           setShowAuth(false);
+
+          // Load learning plan from database
+          const dbPlan = await LearningPlanService.getActiveLearningPlan();
+          if (dbPlan) {
+            setAiLearningPlan(dbPlan);
+          } else {
+            // Initialize default plan if none exists
+            await LearningPlanService.initializeDefaultPlan();
+            const defaultPlan = await LearningPlanService.getActiveLearningPlan();
+            if (defaultPlan) {
+              setAiLearningPlan(defaultPlan);
+            }
+          }
         }
       } catch (error) {
         console.error('Error checking auth:', error);
@@ -308,6 +323,13 @@ function App() {
             <h2>Settings</h2>
             <p>Account settings and preferences will appear here.</p>
           </div>
+        );
+      case 'admin':
+        return (
+          <AdminPanel
+            currentUser={currentUser!}
+            onSignOut={handleSignOut}
+          />
         );
       default:
         return (

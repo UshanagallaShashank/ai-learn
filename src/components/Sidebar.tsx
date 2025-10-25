@@ -41,6 +41,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser, activeView, onViewChange
             label: 'Settings',
             icon: 'bi-gear-fill',
             description: 'Account & Preferences'
+        },
+        {
+            id: 'admin',
+            label: 'Admin',
+            icon: 'bi-shield-check',
+            description: 'Admin Panel'
         }
     ];
 

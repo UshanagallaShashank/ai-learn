@@ -193,628 +193,624 @@ export const sampleAiLearningPlan: LearningPlan = {
       link: "https://www.youtube.com/watch?v=-5hEYRt8JE0"
     },
   ],
-  day15: [
-    {
-      title: "What is Deep Learning? Complete Introduction",
-      link: "https://www.youtube.com/watch?v=6M5VXKLf4D4"
-    }
-  ],
-  day16: [
-    {
-      title: "Neurons and Activation Functions",
-      link: "https://www.youtube.com/watch?v=Xvg00QnyaIY"
-    }
-  ],
-  day17: [
-    {
-      title: "Feedforward Neural Networks Explained",
-      link: "https://www.youtube.com/watch?v=CqOfi41LfDw"
-    }
-  ],
-  day18: [
-    {
-      title: "Backpropagation Calculus Explained",
-      link: "https://www.youtube.com/watch?v=tIeHLnjs5U8"
-    }
-  ],
-  day19: [
-    {
-      title: "Gradient Descent Clearly Explained",
-      link: "https://www.youtube.com/watch?v=sDv4f4s2SB8"
-    }
-  ],
+  day15: [{
+    title: "How Neural Networks Learn - The Training Process Explained",
+    link: "https://www.youtube.com/watch?v=aircAruvnKk"
+  }],
+  
+  day16: [{
+    title: "Gradient Descent Explained Simply - How AI Improves Itself",
+    link: "https://www.youtube.com/watch?v=sDv4f4s2SB8"
+  }],
+  
+  day17: [{
+    title: "Backpropagation - The Algorithm That Powers Deep Learning",
+    link: "https://www.youtube.com/watch?v=tIeHLnjs5U8"
+  }],
+  
+  day18: [{
+    title: "Overfitting and Underfitting - Why AI Models Fail",
+    link: "https://www.youtube.com/watch?v=6g0t3Phly2M"
+  }],
+  
+  day19: [{
+    title: "Loss Functions and Optimization - Making Models Better",
+    link: "https://www.youtube.com/watch?v=YJNjZGbIbjE"
+  }],
+  
   day20: [
     {
-      title: "CNN Explained - Image Recognition",
-      link: "https://www.youtube.com/watch?v=YRhxdVk_sIs"
+      title: "How to Train AI Models - Complete Pipeline",
+      link: "https://www.youtube.com/watch?v=VsjhpUuOKn0"
     },
     {
-      title: "How CNNs Actually Work",
-      link: "https://www.youtube.com/watch?v=JB8T_zN7ZC0"
+      title: "Activation Functions - Why Models Need Them",
+      link: "https://www.youtube.com/watch?v=Xvg00QnyaIY"
     },
     {
-      title: "Transfer Learning Explained",
+      title: "Transfer Learning - Using Pre-trained Models (Key for BAs)",
       link: "https://www.youtube.com/watch?v=5T-iXNNiwIs"
     }
   ],
+  
   day21: [
     {
-      title: "Recurrent Neural Networks (RNN) Explained",
-      link: "https://www.youtube.com/watch?v=AsNTP8Kwu80"
-    },
-    {
-      title: "LSTM Networks Explained",
-      link: "https://www.youtube.com/watch?v=YCzL96nL7j0"
-    },
-    {
-      title: "Regularization Techniques in Deep Learning",
-      link: "https://www.youtube.com/watch?v=6g0t3Phly2M"
-    }
-  ],
-  day22: [
-    {
-      title: "Natural Language Processing in 10 Minutes",
-      link: "https://www.youtube.com/watch?v=CMrHM8a3hqw"
-    }
-  ],
-  day23: [
-    {
-      title: "NLP Text Preprocessing Explained",
-      link: "https://www.youtube.com/watch?v=nxhCyeRR75Q"
-    }
-  ],
-  day24: [
-    {
-      title: "Word Embeddings Explained Simply",
-      link: "https://www.youtube.com/watch?v=viZrOnJclY0"
-    }
-  ],
-  day25: [
-    {
-      title: "Sentiment Analysis Explained",
-      link: "https://www.youtube.com/watch?v=9LZ9hMzr3f8"
-    }
-  ],
-  day26: [
-    {
-      title: "Named Entity Recognition (NER) Explained",
-      link: "https://www.youtube.com/watch?v=k4NhjLFZ3ic"
-    }
-  ],
-  day27: [
-    {
-      title: "POS Tagging and Dependency Parsing",
-      link: "https://www.youtube.com/watch?v=xvqsFTUsOmc"
-    },
-    {
-      title: "Seq2Seq Models Explained",
-      link: "https://www.youtube.com/watch?v=L8HKweZIOmg"
-    },
-    {
-      title: "Attention Mechanism Explained",
-      link: "https://www.youtube.com/watch?v=fjJOgb-E41w"
-    }
-  ],
-  day28: [
-    {
-      title: "Self-Attention in NLP",
-      link: "https://www.youtube.com/watch?v=yGTUuEx3GkA"
-    },
-    {
-      title: "Transformers Explained Visually",
-      link: "https://www.youtube.com/watch?v=4Bdc55j80l8"
-    },
-    {
-      title: "BERT Explained in Detail",
-      link: "https://www.youtube.com/watch?v=xI0HHN5XKDo"
-    }
-  ],
-  day29: [
-    {
-      title: "Generative AI Explained in 5 Minutes",
-      link: "https://www.youtube.com/watch?v=hfIUstzHs9A"
-    }
-  ],
-  day30: [
-    {
-      title: "Discriminative vs Generative Models",
-      link: "https://www.youtube.com/watch?v=V7TliSCqOwI"
-    }
-  ],
-  day31: [
-    {
-      title: "Variational Autoencoders (VAE) Explained",
-      link: "https://www.youtube.com/watch?v=9zKuYvjFFS8"
-    }
-  ],
-  day32: [
-    {
-      title: "GANs Explained for Everyone",
-      link: "https://www.youtube.com/watch?v=8L11aMN5KY8"
-    }
-  ],
-  day33: [
-    {
-      title: "Diffusion Models Explained",
-      link: "https://www.youtube.com/watch?v=fbLgFrlTnGU"
-    }
-  ],
-  day34: [
-    {
-      title: "How DALL-E 2 Actually Works",
-      link: "https://www.youtube.com/watch?v=F1X4fHzF4mQ"
-    },
-    {
-      title: "Pix2Pix and Image Translation",
-      link: "https://www.youtube.com/watch?v=9SGs4Nm0VR4"
-    },
-    {
-      title: "Neural Style Transfer Explained",
-      link: "https://www.youtube.com/watch?v=R39tWYYKNcI"
-    }
-  ],
-  day35: [
-    {
-      title: "AI Music Generation Explained",
-      link: "https://www.youtube.com/watch?v=Emidxpkyk6o"
-    },
-    {
-      title: "How AI Video Generation Works",
-      link: "https://www.youtube.com/watch?v=TqsZpCNUiXs"
-    },
-    {
-      title: "The Technology Behind DeepFakes",
-      link: "https://www.youtube.com/watch?v=7XchCsYtYMQ"
-    }
-  ],
-  day36: [
-    {
-      title: "LLMs Explained - How ChatGPT Works",
-      link: "https://www.youtube.com/watch?v=zjkBMFhNj_g"
-    }
-  ],
-  day37: [
-    {
-      title: "GPT Architecture Explained in Detail",
-      link: "https://www.youtube.com/watch?v=kCc8FmEb1nY"
-    }
-  ],
-  day38: [
-    {
-      title: "How ChatGPT Was Trained - Andrej Karpathy",
-      link: "https://www.youtube.com/watch?v=VPRSBzXzavo"
-    }
-  ],
-  day39: [
-    {
-      title: "Tokenization Explained - Andrej Karpathy",
-      link: "https://www.youtube.com/watch?v=zduSFxRajkE"
-    }
-  ],
-  day40: [
-    {
-      title: "Context Windows in LLMs Explained",
-      link: "https://www.youtube.com/watch?v=CZl8JtKb6g8"
-    }
-  ],
-  day41: [
-    {
-      title: "LLM Parameters - Temperature and Top-P",
-      link: "https://www.youtube.com/watch?v=YJNjZGbIbjE"
-    },
-    {
-      title: "Fine-tuning LLMs Explained",
+      title: "Fine-tuning vs Training from Scratch - When to Use Each",
       link: "https://www.youtube.com/watch?v=eC6Hd1hFvos"
     },
     {
-      title: "RLHF - How ChatGPT Learns from Feedback",
-      link: "https://www.youtube.com/watch?v=2MBJOuVq380"
-    }
-  ],
-  day42: [
-    {
-      title: "Emergent Abilities - What Makes LLMs Special",
-      link: "https://www.youtube.com/watch?v=dbo3kNKPaUA"
+      title: "Model Evaluation Metrics - How to Know If Your Model Works",
+      link: "https://www.youtube.com/watch?v=fMlR5W-bgXs"
     },
     {
-      title: "Why AI Hallucinates and How to Fix It",
-      link: "https://www.youtube.com/watch?v=5p6G_6SzZ88"
-    },
-    {
-      title: "GPT-4V and Multimodal AI",
-      link: "https://www.youtube.com/watch?v=C2dxKTmMjBY"
-    }
-  ],
-  day43: [
-    {
-      title: "Prompt Engineering Complete Guide",
-      link: "https://www.youtube.com/watch?v=_ZvnD73m40o"
-    }
-  ],
-  day44: [
-    {
-      title: "Zero-Shot and Few-Shot Learning Explained",
-      link: "https://www.youtube.com/watch?v=uAFRN1aYgHk"
-    }
-  ],
-  day45: [
-    {
-      title: "Chain-of-Thought Prompting Explained",
-      link: "https://www.youtube.com/watch?v=H4v-DwW5AQo"
-    }
-  ],
-  day46: [
-    {
-      title: "Semantic Understanding in NLP",
-      link: "https://www.youtube.com/watch?v=lHf_JhVX89I"
-    }
-  ],
-  day47: [
-    {
-      title: "Vector Embeddings Explained",
-      link: "https://www.youtube.com/watch?v=5MaWmXwxFNQ"
-    }
-  ],
-  day48: [
-    {
-      title: "Advanced Prompting Strategies",
-      link: "https://www.youtube.com/watch?v=T9aRN5JkmL8"
-    },
-    {
-      title: "Prompt Injection Attacks Explained",
-      link: "https://www.youtube.com/watch?v=Sv5OLj2nVAQ"
-    },
-    {
-      title: "Creating Effective AI Personas",
-      link: "https://www.youtube.com/watch?v=mJVljdMNQQQ"
-    }
-  ],
-  day49: [
-    {
-      title: "Tree-of-Thought Prompting",
-      link: "https://www.youtube.com/watch?v=ut5kp56wW_4"
-    },
-    {
-      title: "ReAct Framework Explained",
-      link: "https://www.youtube.com/watch?v=wVpJjlPP7AY"
-    },
-    {
-      title: "Cosine Similarity and Vector Search",
-      link: "https://www.youtube.com/watch?v=e9U0QAFbfLI"
-    }
-  ],
-  day50: [
-    {
-      title: "RAG Explained - Retrieval Augmented Generation",
-      link: "https://www.youtube.com/watch?v=T-D1OfcDW1M"
-    }
-  ],
-  day51: [
-    {
-      title: "Vector Databases Explained",
-      link: "https://www.youtube.com/watch?v=klTvEwg3oJ4"
-    }
-  ],
-  day52: [
-    {
-      title: "Chunking Strategies for RAG",
-      link: "https://www.youtube.com/watch?v=8OJC21T2SL4"
-    }
-  ],
-  day53: [
-    {
-      title: "Retrieval Techniques in RAG Systems",
-      link: "https://www.youtube.com/watch?v=wd7TZ4w1mSw"
-    }
-  ],
-  day54: [
-    {
-      title: "RAG vs Fine-tuning - Complete Comparison",
-      link: "https://www.youtube.com/watch?v=00Q0G84kq3M"
-    }
-  ],
-  day55: [
-    {
-      title: "Advanced RAG Techniques",
-      link: "https://www.youtube.com/watch?v=JChPi0CRnDY"
-    },
-    {
-      title: "Hybrid Search Explained",
-      link: "https://www.youtube.com/watch?v=6pJBMgOl6LQ"
-    },
-    {
-      title: "Improving RAG with Reranking",
-      link: "https://www.youtube.com/watch?v=VYT3_5VBAVQ"
-    }
-  ],
-  day56: [
-    {
-      title: "Using Knowledge Graphs with RAG",
-      link: "https://www.youtube.com/watch?v=mmz5WqYTqsA"
-    },
-    {
-      title: "Agentic RAG Systems",
-      link: "https://www.youtube.com/watch?v=u5Vcrwpzoz8"
-    },
-    {
-      title: "Evaluating RAG Systems",
-      link: "https://www.youtube.com/watch?v=S6uJqFpLJXw"
-    }
-  ],
-  day57: [
-    {
-      title: "Optical Character Recognition (OCR) Explained",
-      link: "https://www.youtube.com/watch?v=RU4kTyI7eQQ"
-    }
-  ],
-  day58: [
-    {
-      title: "Modern OCR with Deep Learning",
-      link: "https://www.youtube.com/watch?v=g9fAZPZGGYg"
-    }
-  ],
-  day59: [
-    {
-      title: "Document AI Explained",
-      link: "https://www.youtube.com/watch?v=nMiFdELFdPg"
-    }
-  ],
-  day60: [
-    {
-      title: "Handwriting Recognition with Deep Learning",
-      link: "https://www.youtube.com/watch?v=8rXJjh21YTE"
-    }
-  ],
-  day61: [
-    {
-      title: "How Chatbots Work - Complete Overview",
-      link: "https://www.youtube.com/watch?v=1lwddP0KUEg"
-    }
-  ],
-  day62: [
-    {
-      title: "NLU in Chatbots - Intent and Entities",
-      link: "https://www.youtube.com/watch?v=8S-8uz5GQeM"
-    },
-    {
-      title: "Dialogue State Tracking Explained",
-      link: "https://www.youtube.com/watch?v=2v-6F2NN7fA"
-    },
-    {
-      title: "Building Contextual Chatbots",
-      link: "https://www.youtube.com/watch?v=U9PpdnDPCcQ"
-    }
-  ],
-  day63: [
-    {
-      title: "Automatic Speech Recognition (ASR) Explained",
-      link: "https://www.youtube.com/watch?v=s2r5TLLbk3w"
-    },
-    {
-      title: "Text-to-Speech Technology Deep Dive",
-      link: "https://www.youtube.com/watch?v=HeH8zJ5CKN0"
-    },
-    {
-      title: "How Voice Assistants Work End-to-End",
-      link: "https://www.youtube.com/watch?v=1vRr_VepZHg"
-    }
-  ],
-  day64: [
-    {
-      title: "AI Agents Explained",
-      link: "https://www.youtube.com/watch?v=F8NKVhkZZWI"
-    }
-  ],
-  day65: [
-    {
-      title: "Function Calling in LLMs",
-      link: "https://www.youtube.com/watch?v=0-zlUy7VUjQ"
-    }
-  ],
-  day66: [
-    {
-      title: "Multi-Agent AI Systems",
-      link: "https://www.youtube.com/watch?v=5TFZfUqsVJs"
-    }
-  ],
-  day67: [
-    {
-      title: "Mixture of Experts (MoE) Explained",
-      link: "https://www.youtube.com/watch?v=mwO6v4BlgZQ"
-    }
-  ],
-  day68: [
-    {
-      title: "Constitutional AI by Anthropic",
-      link: "https://www.youtube.com/watch?v=eaAonE58sLU"
-    }
-  ],
-  day69: [
-    {
-      title: "Quantization Explained - Efficient AI Models",
+      title: "Data Splitting - Training, Validation, Test Sets",
       link: "https://www.youtube.com/watch?v=DcNHnMSjwVU"
+    }
+  ],
+
+  // ========== WEEK 4 (Days 22-28): TRANSFORMERS - THE AI REVOLUTION ==========
+  // Goal: Understand Transformers that power ChatGPT, their chatbots
+  
+  day22: [{
+    title: "Attention Mechanism - The Breakthrough That Changed AI",
+    link: "https://www.youtube.com/watch?v=eMlx5fFNoYc"
+  }],
+  
+  day23: [{
+    title: "Transformers Architecture - How ChatGPT's Brain Works",
+    link: "https://www.youtube.com/watch?v=4Bdc55j80l8"
+  }],
+  
+  day24: [{
+    title: "Self-Attention Explained - Why Transformers Understand Context",
+    link: "https://www.youtube.com/watch?v=yGTUuEx3GkA"
+  }],
+  
+  day25: [{
+    title: "Encoder-Decoder vs Decoder-Only Models - BERT vs GPT",
+    link: "https://www.youtube.com/watch?v=xI0HHN5XKDo"
+  }],
+  
+  day26: [{
+    title: "How LLMs Generate Text - The Prediction Process",
+    link: "https://www.youtube.com/watch?v=zjkBMFhNj_g"
+  }],
+  
+  day27: [
+    {
+      title: "Intro to Large Language Models - Andrej Karpathy (Deep Technical)",
+      link: "https://www.youtube.com/watch?v=zjkBMFhNj_g"
     },
     {
-      title: "LoRA Explained - Fine-tuning Made Easy",
+      title: "GPT Architecture Explained - From Input to Output",
+      link: "https://www.youtube.com/watch?v=kCc8FmEb1nY"
+    },
+    {
+      title: "How ChatGPT Works - Training Pipeline for LLMs",
+      link: "https://www.youtube.com/watch?v=VPRSBzXzavo"
+    }
+  ],
+  
+  day28: [
+    {
+      title: "RLHF - How ChatGPT Learned to Be Helpful (Alignment)",
+      link: "https://www.youtube.com/watch?v=2MBJOuVq380"
+    },
+    {
+      title: "Tokenization - Why LLMs Have Character Limits",
+      link: "https://www.youtube.com/watch?v=zduSFxRajkE"
+    },
+    {
+      title: "Context Windows - How LLMs Remember",
+      link: "https://www.youtube.com/watch?v=YJNjZGbIbjE"
+    }
+  ],
+
+  // ========== WEEK 5 (Days 29-35): BUILDING WITH LLMs ==========
+  // Goal: What BAs can build - understand practical implementations
+  
+  day29: [{
+    title: "How to Use LLM APIs - Building Applications (Not from Scratch)",
+    link: "https://www.youtube.com/watch?v=aqdWSjWC3xY"
+  }],
+  
+  day30: [{
+    title: "Prompt Engineering Complete Guide - Your Superpower as BA",
+    link: "https://www.youtube.com/watch?v=_ZvnD73m40o"
+  }],
+  
+  day31: [{
+    title: "Few-Shot Prompting - Writing Examples to Guide AI",
+    link: "https://www.youtube.com/watch?v=uAFRN1aYgHk"
+  }],
+  
+  day32: [{
+    title: "Chain-of-Thought Prompting - Making AI Reason Step-by-Step",
+    link: "https://www.youtube.com/watch?v=H4v-DwW5AQo"
+  }],
+  
+  day33: [{
+    title: "Fine-tuning LLMs - When and How to Customize Models",
+    link: "https://www.youtube.com/watch?v=eC6Hd1hFvos"
+  }],
+  
+  day34: [
+    {
+      title: "LoRA - Efficient Fine-tuning for BAs (No Need for Deep Knowledge)",
       link: "https://www.youtube.com/watch?v=PXWYUTMt-AU"
     },
     {
-      title: "Running AI on Edge Devices",
-      link: "https://www.youtube.com/watch?v=6stDhEA0wFQ"
-    }
-  ],
-  day70: [
-    {
-      title: "RLHF Complete Explanation",
-      link: "https://www.youtube.com/watch?v=BG3jjnuw-XU"
+      title: "LLM Parameters - Temperature, Top-P (What You Control)",
+      link: "https://www.youtube.com/watch?v=YJNjZGbIbjE"
     },
     {
-      title: "Vision Transformers (ViT) Explained",
-      link: "https://www.youtube.com/watch?v=TrdevFK_am4"
+      title: "API-First Development - Building Without Training Models",
+      link: "https://www.youtube.com/watch?v=aqdWSjWC3xY"
+    }
+  ],
+  
+  day35: [
+    {
+      title: "Tree-of-Thought Prompting - Advanced Reasoning Patterns",
+      link: "https://www.youtube.com/watch?v=ut5kp56wW_4"
     },
     {
-      title: "Lifelong Learning in AI",
-      link: "https://www.youtube.com/watch?v=7qT5P9KJnWo"
-    }
-  ],
-  day71: [
-    {
-      title: "MLOps Explained",
-      link: "https://www.youtube.com/watch?v=ZVWg18AXXuE"
-    }
-  ],
-  day72: [
-    {
-      title: "ML Model Monitoring Explained",
-      link: "https://www.youtube.com/watch?v=gNucBPrfKuw"
-    }
-  ],
-  day73: [
-    {
-      title: "A/B Testing ML Models",
-      link: "https://www.youtube.com/watch?v=fMlR5W-bgXs"
-    }
-  ],
-  day74: [
-    {
-      title: "Scaling Machine Learning Systems",
-      link: "https://www.youtube.com/watch?v=7pFHNsx4_cA"
-    }
-  ],
-  day75: [
-    {
-      title: "Building ML Data Pipelines",
-      link: "https://www.youtube.com/watch?v=E7QimRVMvlw"
-    }
-  ],
-  day76: [
-    {
-      title: "Feature Stores Explained",
-      link: "https://www.youtube.com/watch?v=nC5WQMMy_7Q"
+      title: "ReAct Framework - How to Make AI Take Actions",
+      link: "https://www.youtube.com/watch?v=wVpJjlPP7AY"
     },
     {
-      title: "Building Real-Time ML Systems",
-      link: "https://www.youtube.com/watch?v=QQ7XTjVx9VY"
-    },
-    {
-      title: "ML Experiment Management",
-      link: "https://www.youtube.com/watch?v=m7d5KQcKI8M"
+      title: "Prompt Injection & Security - Important for BAs",
+      link: "https://www.youtube.com/watch?v=Sv5OLj2nVAQ"
     }
   ],
-  day77: [
+
+  // ========== WEEK 6 (Days 36-42): EMBEDDINGS & VECTORS ==========
+  // Goal: Understand semantic understanding - foundation for RAG
+  
+  day36: [{
+    title: "Vector Embeddings Explained - How AI Understands Meaning",
+    link: "https://www.youtube.com/watch?v=5MaWmXwxFNQ"
+  }],
+  
+  day37: [{
+    title: "Word Embeddings - Word2Vec, GloVe Explained",
+    link: "https://www.youtube.com/watch?v=viZrOnJclY0"
+  }],
+  
+  day38: [{
+    title: "Semantic Search - Why It's Better Than Keyword Search",
+    link: "https://www.youtube.com/watch?v=lHf_JhVX89I"
+  }],
+  
+  day39: [{
+    title: "Cosine Similarity - How Computers Measure Meaning",
+    link: "https://www.youtube.com/watch?v=e9U0QAFbfLI"
+  }],
+  
+  day40: [{
+    title: "Sentence Embeddings - Understanding Entire Sentences",
+    link: "https://www.youtube.com/watch?v=xI0HHN5XKDo"
+  }],
+  
+  day41: [
     {
-      title: "AI Microservices Design Patterns",
-      link: "https://www.youtube.com/watch?v=h8oKmBhKIB0"
+      title: "Vector Databases Explained - Storing Meaning at Scale",
+      link: "https://www.youtube.com/watch?v=klTvEwg3oJ4"
     },
     {
-      title: "Optimizing ML Model Serving",
-      link: "https://www.youtube.com/watch?v=dZMC4UcaO9I"
+      title: "Hybrid Search - Combining Vector + Keyword Search",
+      link: "https://www.youtube.com/watch?v=6pJBMgOl6LQ"
     },
     {
-      title: "Reducing ML Infrastructure Costs",
-      link: "https://www.youtube.com/watch?v=FxJ0s85KS3c"
+      title: "BERT Embeddings - Pre-trained Semantic Understanding",
+      link: "https://www.youtube.com/watch?v=xI0HHN5XKDo"
     }
   ],
-  day78: [
+  
+  day42: [
     {
-      title: "Autonomous AI Agents",
+      title: "Building Semantic Search Systems - What BAs Can Build",
+      link: "https://www.youtube.com/watch?v=klTvEwg3oJ4"
+    },
+    {
+      title: "Embeddings for Business - Document Search, Recommendations",
+      link: "https://www.youtube.com/watch?v=5MaWmXwxFNQ"
+    },
+    {
+      title: "Advanced Vector Search Techniques",
+      link: "https://www.youtube.com/watch?v=JChPi0CRnDY"
+    }
+  ],
+
+  // ========== WEEK 7 (Days 43-49): RAG - THE GAME CHANGER ==========
+  // Goal: Deep understanding of RAG - BAs build this the most
+  
+  day43: [{
+    title: "What is RAG? - How to Give AI Access to Your Data",
+    link: "https://www.youtube.com/watch?v=T-D1OfcDW1M"
+  }],
+  
+  day44: [{
+    title: "RAG Architecture - The Complete Pipeline Explained",
+    link: "https://www.youtube.com/watch?v=63B-3rqRFbQ"
+  }],
+  
+  day45: [{
+    title: "RAG: The 2025 Best-Practice Stack - Production Patterns",
+    link: "https://www.youtube.com/watch?v=TaXhaA76bfA"
+  }],
+  
+  day46: [{
+    title: "Chunking Strategies - How to Split Documents for RAG",
+    link: "https://www.youtube.com/watch?v=8OJC21T2SL4"
+  }],
+  
+  day47: [{
+    title: "Retrieval Techniques - Finding Relevant Documents",
+    link: "https://www.youtube.com/watch?v=wd7TZ4w1mSw"
+  }],
+  
+  day48: [
+    {
+      title: "RAG vs Fine-tuning - Understand the Trade-offs",
+      link: "https://www.youtube.com/watch?v=00Q0G84kq3M"
+    },
+    {
+      title: "Advanced RAG - Reranking, Filtering, Augmentation",
+      link: "https://www.youtube.com/watch?v=JChPi0CRnDY"
+    },
+    {
+      title: "Complete RAG Crash Course With Langchain",
+      link: "https://www.youtube.com/watch?v=o126p1QN_RI"
+    }
+  ],
+  
+  day49: [
+    {
+      title: "Evaluating RAG Systems - Metrics That Matter",
+      link: "https://www.youtube.com/watch?v=S6uJqFpLJXw"
+    },
+    {
+      title: "Knowledge Graphs with RAG - Advanced Patterns",
+      link: "https://www.youtube.com/watch?v=mmz5WqYTqsA"
+    },
+    {
+      title: "What BAs Can Build - RAG Applications",
+      link: "https://www.youtube.com/watch?v=8QRvKCCp2B0"
+    }
+  ],
+
+  // ========== WEEK 8 (Days 50-56): AGENTS & MCP ==========
+  // Goal: Understanding agents - beyond Q&A to actions
+  
+  day50: [{
+    title: "What are AI Agents? - Beyond Simple Chatbots",
+    link: "https://www.youtube.com/watch?v=F8NKVhkZZWI"
+  }],
+  
+  day51: [{
+    title: "Agent Architecture - How Agents Think and Act",
+    link: "https://www.youtube.com/watch?v=bTMPwUgLZf0"
+  }],
+  
+  day52: [{
+    title: "ReAct Framework - Reasoning + Acting",
+    link: "https://www.youtube.com/watch?v=wVpJjlPP7AY"
+  }],
+  
+  day53: [{
+    title: "Function Calling in LLMs - How Agents Use Tools",
+    link: "https://www.youtube.com/watch?v=0-zlUy7VUjQ"
+  }],
+  
+  day54: [{
+    title: "Model Context Protocol (MCP) - Universal Tool Access",
+    link: "https://www.youtube.com/watch?v=tzrwxLNHtRY"
+  }],
+  
+  day55: [
+    {
+      title: "MCP Complete Deep Dive - Why It Matters",
+      link: "https://www.youtube.com/watch?v=7j_NE6Pjv-E"
+    },
+    {
+      title: "MCP vs RAG - When to Use Each",
+      link: "https://www.youtube.com/watch?v=FSvLF6O_vYs"
+    },
+    {
+      title: "Building AI Agents - What BAs Can Create",
+      link: "https://www.youtube.com/watch?v=4kOGb-5C73U"
+    }
+  ],
+  
+  day56: [
+    {
+      title: "Multi-Agent Systems - Agents Working Together",
+      link: "https://www.youtube.com/watch?v=5TFZfUqsVJs"
+    },
+    {
+      title: "Agent Orchestration - Complex Workflows",
+      link: "https://www.youtube.com/watch?v=9izHUWherYw"
+    },
+    {
+      title: "Autonomous Agents - The Future BAs Will Build",
       link: "https://www.youtube.com/watch?v=j8H7gsJN96U"
     }
   ],
-  day79: [
+
+  // ========== WEEK 9 (Days 57-63): PRACTICAL BA IMPLEMENTATIONS ==========
+  // Goal: Understanding real systems BAs work with - Voice, OCR, etc
+  
+  day57: [{
+    title: "How Voice Assistants Work - ASR, NLU, TTS Pipeline",
+    link: "https://www.youtube.com/watch?v=1vRr_VepZHg"
+  }],
+  
+  day58: [{
+    title: "Speech Recognition (ASR) - How Computers Understand Speech",
+    link: "https://www.youtube.com/watch?v=s2r5TLLbk3w"
+  }],
+  
+  day59: [{
+    title: "Text-to-Speech (TTS) - How Computers Generate Speech",
+    link: "https://www.youtube.com/watch?v=HeH8zJ5CKN0"
+    }],
+  
+  day60: [{
+    title: "How Chatbots Work - NLU, Intent, Dialogue",
+    link: "https://www.youtube.com/watch?v=1lwddP0KUEg"
+  }],
+  
+  day61: [{
+    title: "OCR and Document AI - Reading Documents Automatically",
+    link: "https://www.youtube.com/watch?v=j_gI4SlVrz8"
+  }],
+  
+  day62: [
     {
-      title: "Multimodal AI Models",
+      title: "Deep Learning for OCR - Modern Approaches",
+      link: "https://www.youtube.com/watch?v=g9fAZPZGGYg"
+    },
+    {
+      title: "Building Document Intelligence - What BAs Can Create",
+      link: "https://www.youtube.com/watch?v=nMiFdELFdPg"
+    },
+    {
+      title: "Form Extraction and Data Capture",
+      link: "https://www.youtube.com/watch?v=RU4kTyI7eQQ"
+    }
+  ],
+  
+  day63: [
+    {
+      title: "Computer Vision Fundamentals - Images and AI",
+      link: "https://www.youtube.com/watch?v=B_8kKi4vwFE"
+    },
+    {
+      title: "Multimodal AI - Understanding Images, Text, Audio Together",
       link: "https://www.youtube.com/watch?v=bZQun8Y4L2A"
-    }
-  ],
-  day80: [
-    {
-      title: "Graph Neural Networks (GNN) Explained",
-      link: "https://www.youtube.com/watch?v=zCEYiCxrL_0"
-    }
-  ],
-  day81: [
-    {
-      title: "Neuromorphic Computing Explained",
-      link: "https://www.youtube.com/watch?v=l-jOfUOqxzE"
-    }
-  ],
-  day82: [
-    {
-      title: "Federated Learning Explained",
-      link: "https://www.youtube.com/watch?v=X8YYWfx7OQ4"
-    }
-  ],
-  day83: [
-    {
-      title: "World Models in AI",
-      link: "https://www.youtube.com/watch?v=9-euiSAd2GI"
     },
     {
-      title: "AlphaFold Explained - AI for Science",
-      link: "https://www.youtube.com/watch?v=gg7WjuFs8F4"
-    },
-    {
-      title: "Causal Inference in AI",
-      link: "https://www.youtube.com/watch?v=ZaPV1OSEpHw"
+      title: "GPT-4V - Multimodal Model Capabilities",
+      link: "https://www.youtube.com/watch?v=C2dxKTmMjBY"
     }
   ],
-  day84: [
+
+  // ========== WEEK 10 (Days 64-70): WHAT BAs CAN BUILD - STRATEGY ==========
+  // Goal: Making strategic decisions, understanding business value
+  
+  day64: [{
+    title: "Build vs Buy - Deciding What to Build",
+    link: "https://www.youtube.com/watch?v=00Q0G84kq3M"
+  }],
+  
+  day65: [{
+    title: "AI ROI and Business Value - Making the Case",
+    link: "https://www.youtube.com/watch?v=UFSDMBhCk1s"
+  }],
+  
+  day66: [{
+    title: "MLOps for BAs - Deploying and Monitoring AI",
+    link: "https://www.youtube.com/watch?v=ZVWg18AXXuE"
+  }],
+  
+  day67: [{
+    title: "A/B Testing AI Systems - Measuring Success",
+    link: "https://www.youtube.com/watch?v=fMlR5W-bgXs"
+  }],
+  
+  day68: [{
+    title: "AI Ethics and Responsible AI - What BAs Need to Know",
+    link: "https://www.youtube.com/watch?v=TU0zigKDYJU"
+  }],
+  
+  day69: [
     {
-      title: "Making AI Explainable (XAI)",
+      title: "Making AI Explainable - XAI for Business",
       link: "https://www.youtube.com/watch?v=3YlYVD1ytac"
     },
     {
-      title: "Ethics in AI Development",
-      link: "https://www.youtube.com/watch?v=TU0zigKDYJU"
+      title: "AI Bias and Fairness - Critical for BAs",
+      link: "https://www.youtube.com/watch?v=7cInNcogQxg"
     },
     {
-      title: "Path to Artificial General Intelligence",
+      title: "Privacy in AI Systems - GDPR, Data Protection",
+      link: "https://www.youtube.com/watch?v=ZaPV1OSEpHw"
+    }
+  ],
+  
+  day70: [
+    {
+      title: "Future AI Trends - What BAs Should Prepare For",
       link: "https://www.youtube.com/watch?v=cdiD-9MMpb0"
+    },
+    {
+      title: "Emergent Abilities in LLMs - New Capabilities",
+      link: "https://www.youtube.com/watch?v=dbo3kNKPaUA"
+    },
+    {
+      title: "Path to AGI - Understanding the Roadmap",
+      link: "https://www.youtube.com/watch?v=5Aer7MUSuSU"
     }
   ],
-  day85: [
+
+  // ========== WEEK 11 (Days 71-77): PYTHON BASICS - MINIMAL BUT SUFFICIENT ==========
+  // Goal: Python for understanding code, writing simple scripts (NOT deep coding)
+  
+  day71: [{
+    title: "Python for AI - Quick Start (No Software Engineering Background Needed)",
+    link: "https://www.youtube.com/watch?v=pNg2DJ4spXg"
+  }],
+  
+  day72: [{
+    title: "Python Fundamentals - Variables, Data Types, Functions",
+    link: "https://www.youtube.com/watch?v=K5KVEU3aaeQ"
+  }],
+  
+  day73: [{
+    title: "Python for Data - Working with Lists, Dicts, JSON",
+    link: "https://www.youtube.com/watch?v=rfscVS0vtbw"
+  }],
+  
+  day74: [{
+    title: "Working with APIs in Python - The Practical Skill BAs Need",
+    link: "https://www.youtube.com/watch?v=aqdWSjWC3xY"
+  }],
+  
+  day75: [{
+    title: "Understanding Code - Reading and Modifying Scripts",
+    link: "https://www.youtube.com/watch?v=-65r_3r-nN4"
+  }],
+  
+  day76: [
     {
-      title: "Python for AI & ML - Crash Course Part 1",
-      link: "https://www.youtube.com/watch?v=rfscVS0vtbw"
-    }
-  ],
-  day86: [
-    {
-      title: "NumPy Complete Tutorial",
+      title: "NumPy for Data - Working with Numbers",
       link: "https://www.youtube.com/watch?v=GB9ByFAIAH4"
-    }
-  ],
-  day87: [
+    },
     {
-      title: "Pandas Tutorial for Beginners",
+      title: "Pandas for Data - Working with Tables",
       link: "https://www.youtube.com/watch?v=vmEHCJofslg"
-    }
-  ],
-  day88: [
+    },
     {
-      title: "Matplotlib Crash Course",
+      title: "Data Visualization - Matplotlib Basics",
       link: "https://www.youtube.com/watch?v=3Xc3CA655Y4"
     }
   ],
-  day89: [
+  
+  day77: [
     {
-      title: "PyTorch in 100 Minutes",
-      link: "https://www.youtube.com/watch?v=V_xro1bcAuA"
-    }
-  ],
-  day90: [
-    {
-      title: "Building with LLM APIs",
+      title: "Python Requests Library - Calling APIs",
       link: "https://www.youtube.com/watch?v=aqdWSjWC3xY"
     },
     {
-      title: "Build a RAG System from Scratch",
+      title: "Working with JSON and APIs",
+      link: "https://www.youtube.com/watch?v=rfscVS0vtbw"
+    },
+    {
+      title: "File Operations - Reading, Writing Data",
+      link: "https://www.youtube.com/watch?v=fLAfa-BQtOQ"
+    }
+  ],
+
+  // ========== WEEK 12 (Days 78-84): PYTHON + AI - BUILDING WITH APIS ==========
+  // Goal: Actually building things - using LLM APIs, RAG systems
+  
+  day78: [{
+    title: "Building with OpenAI API - No Model Training Required",
+    link: "https://www.youtube.com/watch?v=aqdWSjWC3xY"
+  }],
+  
+  day79: [{
+    title: "LangChain Basics - Framework for Building AI Apps",
+    link: "https://www.youtube.com/watch?v=lG7Uxts9SXs"
+  }],
+  
+  day80: [{
+    title: "Building a Simple RAG System - Step by Step",
+    link: "https://www.youtube.com/watch?v=tcqEUSNCn8I"
+  }],
+  
+  day81: [{
+    title: "Working with Embeddings - Creating and Searching",
+    link: "https://www.youtube.com/watch?v=5MaWmXwxFNQ"
+  }],
+  
+  day82: [{
+    title: "OCR with Python - Reading Documents Programmatically",
+    link: "https://www.youtube.com/watch?v=PY_N1XdFp4w"
+  }],
+  
+  day83: [
+    {
+      title: "Complete RAG Implementation with Python",
+      link: "https://www.youtube.com/watch?v=o126p1QN_RI"
+    },
+    {
+      title: "Building Chatbots - Practical Implementation",
+      link: "https://www.youtube.com/watch?v=1lwddP0KUEg"
+    },
+    {
+      title: "Semantic Search Application",
+      link: "https://www.youtube.com/watch?v=klTvEwg3oJ4"
+    }
+  ],
+  
+  day84: [
+    {
+      title: "Building AI Agents in Python - Practical Approach",
+      link: "https://www.youtube.com/watch?v=bTMPwUgLZf0"
+    },
+    {
+      title: "Vector Databases - ChromaDB, Pinecone",
+      link: "https://www.youtube.com/watch?v=klTvEwg3oJ4"
+    },
+    {
+      title: "Error Handling and Debugging in AI Apps",
+      link: "https://www.youtube.com/watch?v=aqdWSjWC3xY"
+    }
+  ],
+
+  // ========== WEEK 13 (Days 85-90): CAPSTONE - BUILDING REAL SOLUTIONS ==========
+  // Goal: Build actual solutions - BA as a developer
+  
+  day85: [{
+    title: "Capstone Project 1: Building a Smart Chatbot with RAG",
+    link: "https://www.youtube.com/watch?v=tcqEUSNCn8I"
+  }],
+  
+  day86: [{
+    title: "Capstone Project 2: Document Intelligence System",
+    link: "https://www.youtube.com/watch?v=PY_N1XdFp4w"
+  }],
+  
+  day87: [{
+    title: "Capstone Project 3: Intelligent Agent with Tools",
+    link: "https://www.youtube.com/watch?v=bTMPwUgLZf0"
+  }],
+  
+  day88: [{
+    title: "Deployment Basics - Getting Your AI App Live",
+    link: "https://www.youtube.com/watch?v=ZVWg18AXXuE"
+  }],
+  
+  day89: [{
+    title: "Monitoring and Maintenance - Keeping Systems Running",
+    link: "https://www.youtube.com/watch?v=gNucBPrfKuw"
+  }],
+  
+  day90: [
+    {
+      title: "Final Capstone: Your Own AI Solution - From Concept to Build",
       link: "https://www.youtube.com/watch?v=tcqEUSNCn8I"
     },
     {
-      title: "OCR with Python and Tesseract",
-      link: "https://www.youtube.com/watch?v=PY_N1XdFp4w"
+      title: "Presenting Your AI Solution - Storytelling for Impact",
+      link: "https://www.youtube.com/watch?v=UFSDMBhCk1s"
+    },
+    {
+      title: "Career Path: From BA to AI Developer",
+      link: "https://www.youtube.com/watch?v=s3KnSb9b4Pk"
     }
   ]
 };
+

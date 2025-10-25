@@ -94,8 +94,8 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions, onComplete, is
             <p className="lead">
               {percentage.toFixed(0)}% - {passed ? 'Passed!' : 'Keep Learning!'}
             </p>
-            <ProgressBar 
-              now={percentage} 
+            <ProgressBar
+              now={percentage}
               variant={passed ? 'success' : 'warning'}
               style={{ height: '10px' }}
               className="mb-3"
@@ -117,7 +117,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions, onComplete, is
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <Card key={index} className="mb-3">
                   <Card.Body>
@@ -128,17 +128,17 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions, onComplete, is
                       </Badge>
                     </div>
                     <p className="mb-2">{question.question}</p>
-                    
+
                     <div className="mb-2">
                       <strong>Your answer:</strong> {question.options[userAnswer] || 'Not answered'}
                     </div>
-                    
+
                     {!isCorrect && (
                       <div className="mb-2">
                         <strong>Correct answer:</strong> {question.options[question.correctAnswer]}
                       </div>
                     )}
-                    
+
                     {question.explanation && (
                       <div className="text-muted">
                         <strong>Explanation:</strong> {question.explanation}
@@ -179,7 +179,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions, onComplete, is
       </Card.Header>
       <Card.Body>
         <h5 className="mb-4">{question.question}</h5>
-        
+
         <Form>
           {question.options.map((option, index) => (
             <Form.Check
@@ -191,7 +191,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions, onComplete, is
               checked={selectedAnswers[currentQuestion] === index}
               onChange={() => handleAnswerSelect(index)}
               className="mb-3 p-3 border rounded"
-              style={{ 
+              style={{
                 backgroundColor: selectedAnswers[currentQuestion] === index ? '#e3f2fd' : 'transparent',
                 cursor: 'pointer'
               }}
@@ -200,16 +200,16 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions, onComplete, is
         </Form>
 
         <div className="d-flex justify-content-between mt-4">
-          <Button 
-            variant="outline-secondary" 
+          <Button
+            variant="outline-secondary"
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
           >
             ← Previous
           </Button>
-          
-          <Button 
-            variant="primary" 
+
+          <Button
+            variant="primary"
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === -1}
           >
