@@ -294,11 +294,13 @@ function App() {
         </div>
       )}
 
-      <Dashboard
-        aiLearningPlan={aiLearningPlan}
-        geminiApiKey={geminiApiKey}
-        currentUser={currentUser}
-      />
+      {currentUser && (
+        <Dashboard
+          aiLearningPlan={aiLearningPlan}
+          geminiApiKey={geminiApiKey}
+          currentUser={currentUser}
+        />
+      )}
     </div>
   );
 }

@@ -71,23 +71,6 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
     }
   };
 
-  const markDayIncomplete = async (day: number) => {
-    try {
-      await ProgressService.markDayIncomplete(currentUser.id, day);
-      setCompletedDays(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(day);
-        return newSet;
-      });
-
-      // Refresh stats
-      const stats = await ProgressService.getUserStats(currentUser.id);
-      setUserStats(stats);
-    } catch (err: any) {
-      setError(err.message || 'Failed to update progress');
-      console.error('Error marking day incomplete:', err);
-    }
-  };
 
   const getTotalHoursCompleted = () => {
     return userStats?.total_hours_learned || 0;
