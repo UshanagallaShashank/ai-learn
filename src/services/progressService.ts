@@ -83,18 +83,18 @@ export class ProgressService {
             return total + (day.time_spent || 0) / 60; // Convert minutes to hours
         }, 0);
 
-        // Calculate current streak
-        const sortedDays = completedDays
+        // Calculate current streak (consecutive days from day 1)
+        const completedDayNumbers = completedDays
             .map(d => d.day)
-            .sort((a, b) => b - a);
+            .sort((a, b) => a - b); // Sort ascending
 
         let currentStreak = 0;
-        let expectedDay = 90; // Start from the last day
+        let expectedDay = 1;
 
-        for (const day of sortedDays) {
+        for (const day of completedDayNumbers) {
             if (day === expectedDay) {
                 currentStreak++;
-                expectedDay--;
+                expectedDay++;
             } else {
                 break;
             }
@@ -150,5 +150,43 @@ export class ProgressService {
 
         if (error) throw error;
         return data;
+    }
+
+    static async initializeUserProgress(userId: string): Promise<void> {
+        // Check if user already has any progress
+        const existingProgress = await this.getUserProgress(userId);
+
+        // If user has no progress, set first 13 days as completed
+        if (existingProgress.length === 0) {
+            const initialProgress = Array.from({ length: 13 }, (_, i) => ({
+                user_id: userId,
+                day: i + 1,
+                completed: true,
+                completed_at: new Date().toISOString(),
+                time_spent: 60, // 1 hour per day
+                quiz_score: 85, // Default quiz score
+                notes: 'Auto-completed as part of initial setup',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+            }));
+
+            const { error } = await supabase
+                .from('user_progress')
+                .insert(initialProgress);
+
+            if (error) {
+                console.error('Error initializing user progress:', error);
+                throw error;
+            }
+        }
+    }
+
+    static async ensureInitialProgress(userId: string): Promise<void> {
+        try {
+            await this.initializeUserProgress(userId);
+        } catch (error) {
+            console.error('Failed to initialize user progress:', error);
+            // Don't throw error to prevent blocking the app
+        }
     }
 }

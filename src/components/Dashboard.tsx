@@ -14,7 +14,7 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, currentUser }) => {
   const [days, setDays] = useState<DayContent[]>([]);
-  const [currentDay, setCurrentDay] = useState(1);
+  const [currentDay, setCurrentDay] = useState(14); // Start from day 14 since 1-13 are completed
   const [completedDays, setCompletedDays] = useState<Set<number>>(new Set());
   const [userStats, setUserStats] = useState<UserStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +32,9 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
       try {
         setIsLoading(true);
         setError('');
+
+        // Ensure initial progress is set (first 13 days completed)
+        await ProgressService.ensureInitialProgress(currentUser.id);
 
         const [completedDaysSet, stats] = await Promise.all([
           ProgressService.getCompletedDays(currentUser.id),
@@ -74,6 +77,29 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
 
   const getTotalHoursCompleted = () => {
     return userStats?.total_hours_learned || 0;
+  };
+
+  const refreshUserData = async () => {
+    try {
+      setIsLoading(true);
+      setError('');
+
+      // Ensure initial progress is set (first 13 days completed)
+      await ProgressService.ensureInitialProgress(currentUser.id);
+
+      const [completedDaysSet, stats] = await Promise.all([
+        ProgressService.getCompletedDays(currentUser.id),
+        ProgressService.getUserStats(currentUser.id)
+      ]);
+
+      setCompletedDays(completedDaysSet);
+      setUserStats(stats);
+    } catch (err: any) {
+      setError(err.message || 'Failed to refresh user data');
+      console.error('Error refreshing user data:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isLoading) {
@@ -266,6 +292,23 @@ const Dashboard: React.FC<DashboardProps> = ({ aiLearningPlan, geminiApiKey, cur
                   onClick={() => setView('week')}
                 >
                   View This Week
+                </Button>
+                <Button
+                  variant="outline-success"
+                  onClick={refreshUserData}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Spinner animation="border" size="sm" className="me-2" />
+                      Refreshing...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-arrow-clockwise me-2"></i>
+                      Refresh Data
+                    </>
+                  )}
                 </Button>
                 <Button
                   variant="outline-secondary"
